@@ -13,22 +13,25 @@ const Button = ({ text, onClick }) => (
 
 export default ({ className, name, label, accept, errors = [], onChange }) => {
   const fileInput = useRef();
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
 
-  function browse() {
+  function browse() { 
     fileInput.current.click();
   }
 
-  function remove() {
-    setFile(null);
-    onChange(null);
+  function remove(index) {
+    files.splice(index, 1);
+    setFiles([...files]);
+    // console.log(files);
+    onChange(files);
     fileInput.current.value = null;
   }
 
   function handleFileChange(e) {
-    const file = e.target.files[0];
-    setFile(file);
-    onChange(file);
+    const files = e.target.files;
+    // console.log([...files]);
+    setFiles([...files]);
+    onChange(files);
   }
 
   return (
@@ -46,21 +49,31 @@ export default ({ className, name, label, accept, errors = [], onChange }) => {
           type="file"
           className="hidden"
           onChange={handleFileChange}
+          multiple
         />
-        {!file && (
+        {files.length==0 && (
           <div className="p-2">
             <Button text="Browse" onClick={browse} />
           </div>
         )}
-        {file && (
-          <div className="flex items-center justify-between p-2">
-            <div className="flex-1 pr-1">
-              {file.name}
-              <span className="ml-1 text-xs text-gray-600">
-                ({filesize(file.size)})
-              </span>
-            </div>
-            <Button text="Remove" onClick={remove} />
+        {files.length!==0 && (
+          <div className="flex flex-col p-2">
+            {
+              files.map((file, key) => {
+                return <div className="flex-1 flex-row" key={key}>
+                  <div className="flex-3 pr-1">
+                    {file.name}
+                    <span className="ml-1 text-xs text-gray-600">
+                      ({filesize(file.size)})
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <Button text="Remove" onClick={()=>remove(key)} />
+                  </div>
+                </div>
+              })
+            }
+            
           </div>
         )}
       </div>

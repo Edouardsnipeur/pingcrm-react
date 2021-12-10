@@ -23,7 +23,7 @@ class OrganizationsController extends Controller
                     ->orderBy('name')
                     ->filter(Request::only('search', 'trashed'))
                     ->paginate()
-                    ->appends(Request::all())
+                    ->appends(Request::all()) 
             ),
         ]);
     }

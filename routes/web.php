@@ -19,6 +19,35 @@ Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 // Dashboard
 Route::get('/')->name('dashboard')->uses('DashboardController')->middleware('auth');
 
+// Photos
+Route::get('photos')->name('photos')->uses('PhotosController@index')->middleware('remember', 'auth');
+Route::get('photos/create')->name('photos.create')->uses('PhotosController@create')->middleware('auth');
+Route::post('photos')->name('photos.store')->uses('PhotosController@store')->middleware('auth');
+Route::get('photos/{photo}/edit')->name('photos.edit')->uses('PhotosController@edit')->middleware('auth');
+Route::put('photos/{photo}')->name('photos.update')->uses('PhotosController@update')->middleware('auth');
+Route::delete('photos/{photo}')->name('photos.destroy')->uses('PhotosController@destroy')->middleware('auth');
+Route::put('photos/{photo}/restore')->name('photos.restore')->uses('PhotosController@restore')->middleware('auth');
+
+
+// categories
+Route::get('categories')->name('categories')->uses('CategoriesController@index')->middleware('remember', 'auth');
+Route::get('categories/create')->name('categories.create')->uses('CategoriesController@create')->middleware('auth');
+Route::post('categories')->name('categories.store')->uses('CategoriesController@store')->middleware('auth');
+Route::get('categories/{category}/edit')->name('categories.edit')->uses('CategoriesController@edit')->middleware('auth');
+Route::put('categories/{category}')->name('categories.update')->uses('CategoriesController@update')->middleware('auth');
+Route::delete('categories/{category}')->name('categories.destroy')->uses('CategoriesController@destroy')->middleware('auth');
+Route::put('categories/{category}/restore')->name('categories.restore')->uses('CategoriesController@restore')->middleware('auth');
+
+// secteurs
+Route::get('secteurs')->name('secteurs')->uses('SecteurController@index')->middleware('remember', 'auth');
+Route::get('secteurs/create')->name('secteurs.create')->uses('SecteurController@create')->middleware('auth');
+Route::post('secteurs')->name('secteurs.store')->uses('SecteurController@store')->middleware('auth');
+Route::get('secteurs/{secteur}/edit')->name('secteurs.edit')->uses('SecteurController@edit')->middleware('auth');
+Route::put('secteurs/{secteur}')->name('secteurs.update')->uses('SecteurController@update')->middleware('auth');
+Route::delete('secteurs/{secteur}')->name('secteurs.destroy')->uses('SecteurController@destroy')->middleware('auth');
+Route::put('secteurs/{secteur}/restore')->name('secteurs.restore')->uses('SecteurController@restore')->middleware('auth');
+
+
 // Users
 Route::get('users')->name('users')->uses('UsersController@index')->middleware('remember', 'auth');
 Route::get('users/create')->name('users.create')->uses('UsersController@create')->middleware('auth');

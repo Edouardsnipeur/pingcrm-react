@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class PhotoStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +24,10 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')],
-            'password' => ['nullable'],
-            'owner' => ['required', 'boolean'],
-            // 'photo' => ['nullable', 'image'],
+            'category_id' => ['required'],
+            'secteur_id' => ['required'],
+            'photos' => ['required'],
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
-
 }
